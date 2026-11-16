@@ -1,0 +1,41 @@
+form {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+form div {
+  margin-bottom: 12px;
+}
+
+label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: bold;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+.invalid-control {
+  border: 2px solid red;
+}
+
+/* mensajes de error de cada campo */
+form div p {
+  color: red;
+  font-size: 0.85rem;
+  margin: 4px 0 0;
+}
+
+button {
+  padding: 6px 14px;
+  margin-right: 8px;
+  cursor: pointer;
+}

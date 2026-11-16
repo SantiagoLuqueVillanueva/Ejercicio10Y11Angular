@@ -1,0 +1,150 @@
+<h1>Gestión de videojuegos</h1>
+
+<form #gameForm="ngForm" (ngSubmit)="onSaveGame(gameForm)" novalidate>
+
+  <div>
+    <label for="titleId">Título: </label>
+    @let invalidTitle = title.invalid && (title.touched || title.dirty || gameForm.submitted);
+    <input
+      [class.invalid-control]="invalidTitle"
+      id="titleId"
+      type="text"
+      name="title"
+      [(ngModel)]="game.title"
+      required
+      minlength="3"
+      maxlength="40"
+      #title="ngModel"
+    >
+    @if (invalidTitle) {
+      @if (title.errors?.['required']) {
+        <p>El título es obligatorio.</p>
+      }
+      @if (title.errors?.['minlength']) {
+        <p>El título debe tener al menos 3 caracteres.</p>
+      }
+    }
+  </div>
+
+  <div>
+    <label for="genreId">Género: </label>
+    @let invalidGenre = genre.invalid && (genre.touched || genre.dirty || gameForm.submitted);
+    <select
+      [class.invalid-control]="invalidGenre"
+      id="genreId"
+      name="genre"
+      [(ngModel)]="game.genre"
+      required
+      #genre="ngModel"
+    >
+      <option value="">Selecciona un género</option>
+      <option value="Platform">Platform</option>
+      <option value="Strategy">Strategy</option>
+      <option value="Racing">Racing</option>
+      <option value="RPG">RPG</option>
+      <option value="Action">Action</option>
+      <option value="Adventure">Adventure</option>
+      <option value="Simulation">Simulation</option>
+      <option value="Sports">Sports</option>
+    </select>
+    @if (invalidGenre) {
+      <p>Debes seleccionar un género.</p>
+    }
+  </div>
+
+  <div>
+    <label for="platformId">Plataforma: </label>
+    @let invalidPlatform = platform.invalid && (platform.touched || platform.dirty || gameForm.submitted);
+    <select
+      [class.invalid-control]="invalidPlatform"
+      id="platformId"
+      name="platform"
+      [(ngModel)]="game.platform"
+      required
+      #platform="ngModel"
+    >
+      <option value="">Selecciona una plataforma</option>
+      <option value="PC">PC</option>
+      <option value="PlayStation">PlayStation</option>
+      <option value="Xbox">Xbox</option>
+      <option value="Switch">Switch</option>
+    </select>
+    @if (invalidPlatform) {
+      <p>Debes seleccionar una plataforma.</p>
+    }
+  </div>
+
+  <div>
+    <label for="priceId">Precio: </label>
+    @let invalidPrice = price.invalid && (price.touched || price.dirty || gameForm.submitted);
+    <input
+      [class.invalid-control]="invalidPrice"
+      id="priceId"
+      type="number"
+      name="price"
+      [(ngModel)]="game.price"
+      required
+      min="0.01"
+      max="100"
+      #price="ngModel"
+    >
+    @if (invalidPrice) {
+      @if (price.errors?.['required']) {
+        <p>El precio es obligatorio.</p>
+      }
+      @if (price.errors?.['min'] || price.errors?.['max']) {
+        <p>Precio fuera de rango permitido (0.01 - 100).</p>
+      }
+    }
+  </div>
+
+  <div>
+    <label for="stockId">Stock: </label>
+    @let invalidStock = stock.invalid && (stock.touched || stock.dirty || gameForm.submitted);
+    <input
+      [class.invalid-control]="invalidStock"
+      id="stockId"
+      type="number"
+      name="stock"
+      [(ngModel)]="game.stock"
+      required
+      min="0"
+      max="999"
+      #stock="ngModel"
+    >
+    @if (invalidStock) {
+      @if (stock.errors?.['required']) {
+        <p>El stock es obligatorio.</p>
+      }
+      @if (stock.errors?.['min'] || stock.errors?.['max']) {
+        <p>Stock fuera de rango permitido (0 - 999).</p>
+      }
+    }
+  </div>
+
+  @if (gameForm.invalid && gameForm.dirty) {
+    <p>Existen campos pendientes de corregir.</p>
+  }
+  @if (gameForm.valid && gameForm.dirty) {
+    <p>Formulario preparado para guardar.</p>
+  }
+
+  <button>
+    @if (game.id) {
+      Actualizar
+    } @else {
+      Crear
+    }
+  </button>
+  <button type="button" (click)="cancelEdit(gameForm)">Cancelar</button>
+
+  <p>Válido: {{ gameForm.valid }}</p>
+  <p>Modificado: {{ gameForm.dirty }}</p>
+</form>
+
+@for (g of games; track g.id) {
+  <p>
+    {{ g.title }} · {{ g.genre }} · {{ g.platform }} · {{ g.price }} € · Stock {{ g.stock }}
+    <button type="button" (click)="editGame(g)">Editar</button>
+  </p>
+}
