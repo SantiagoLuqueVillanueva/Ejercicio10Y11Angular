@@ -39,6 +39,14 @@
       "price": 60,
       "stock": 5,
       "id": 5
+    },
+    {
+      "title": "The legend of zelda",
+      "genre": "Adventure",
+      "platform": "Switch",
+      "price": 70,
+      "stock": 30,
+      "id": 6
     }
   ]
 }
